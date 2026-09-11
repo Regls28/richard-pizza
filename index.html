@@ -1,0 +1,1286 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Richard Pizza | Ordena en linea</title>
+  <style>
+    :root {
+      --bg: #161210;
+      --panel: #241c18;
+      --panel-2: #30241d;
+      --line: #4d382d;
+      --text: #fff7ee;
+      --muted: #d9c5b4;
+      --gold: #f4b13f;
+      --red: #d63b26;
+      --red-dark: #9e271a;
+      --green: #24b35a;
+      --blue: #1677c8;
+      --cream: #ffe4b3;
+      --shadow: 0 22px 70px rgba(0,0,0,.34);
+    }
+
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      min-height: 100vh;
+      padding-bottom: 92px;
+      background:
+        radial-gradient(circle at 82% 4%, rgba(244,177,63,.2), transparent 30%),
+        linear-gradient(180deg, #20130f 0%, var(--bg) 48%, #0f0b09 100%);
+      color: var(--text);
+      font-family: "Segoe UI", Arial, sans-serif;
+    }
+
+    button, input, select, textarea { font: inherit; }
+    button { border: 0; }
+    a { color: inherit; }
+
+    .hero {
+      overflow: hidden;
+      border-bottom: 1px solid var(--line);
+      background:
+        linear-gradient(90deg, rgba(22,18,16,.98) 0%, rgba(22,18,16,.88) 54%, rgba(22,18,16,.42) 100%),
+        radial-gradient(circle at 78% 45%, #f4b13f 0 4.5%, #d63b26 4.8% 9%, #ffe4b3 9.2% 11.8%, #94321d 12% 18%, transparent 18.2%),
+        linear-gradient(135deg, #552015, #161210 72%);
+    }
+
+    .hero-inner {
+      max-width: 1120px;
+      min-height: 398px;
+      margin: 0 auto;
+      padding: 34px 18px 42px;
+      display: grid;
+      grid-template-columns: minmax(0, 1.1fr) minmax(280px, .9fr);
+      gap: 34px;
+      align-items: center;
+    }
+
+    .brand-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      max-width: 100%;
+      padding: 8px 12px;
+      border: 1px solid rgba(244,177,63,.38);
+      border-radius: 999px;
+      background: rgba(36,28,24,.75);
+      color: var(--gold);
+      font-size: .82rem;
+      font-weight: 900;
+      text-transform: uppercase;
+    }
+
+    .brand-mark {
+      display: grid;
+      place-items: center;
+      width: 30px;
+      height: 30px;
+      border-radius: 50%;
+      background: var(--gold);
+      color: #180b07;
+      font-weight: 950;
+    }
+
+    h1 {
+      margin: 18px 0 10px;
+      font-size: clamp(2.55rem, 8vw, 5.25rem);
+      line-height: .92;
+      letter-spacing: 0;
+      text-transform: uppercase;
+    }
+
+    .lead {
+      max-width: 660px;
+      margin: 0;
+      color: var(--muted);
+      font-size: clamp(1rem, 2.2vw, 1.2rem);
+      line-height: 1.55;
+    }
+
+    .hero-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-top: 26px;
+    }
+
+    .hero-info {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 10px;
+      margin-top: 28px;
+    }
+
+    .info-tile {
+      min-height: 78px;
+      border: 1px solid rgba(255,255,255,.11);
+      border-radius: 8px;
+      background: rgba(255,255,255,.045);
+      padding: 13px;
+    }
+
+    .info-tile strong {
+      display: block;
+      margin-bottom: 5px;
+      color: var(--gold);
+      font-size: .78rem;
+      text-transform: uppercase;
+    }
+
+    .info-tile span {
+      color: var(--muted);
+      font-size: .9rem;
+      line-height: 1.35;
+    }
+
+    .pizza-showcase {
+      justify-self: center;
+      width: min(365px, 86vw);
+      aspect-ratio: 1;
+      position: relative;
+      filter: drop-shadow(0 34px 40px rgba(0,0,0,.48));
+    }
+
+    .pizza-showcase::before {
+      content: "";
+      position: absolute;
+      inset: 6%;
+      border-radius: 50%;
+      background:
+        radial-gradient(circle at 29% 31%, #8d1f16 0 5%, transparent 5.4%),
+        radial-gradient(circle at 66% 29%, #8d1f16 0 5%, transparent 5.4%),
+        radial-gradient(circle at 43% 64%, #8d1f16 0 5%, transparent 5.4%),
+        radial-gradient(circle at 71% 67%, #8d1f16 0 5%, transparent 5.4%),
+        radial-gradient(circle at 31% 72%, #fff1cf 0 4.2%, transparent 4.6%),
+        radial-gradient(circle at 57% 48%, #fff1cf 0 4.2%, transparent 4.6%),
+        repeating-conic-gradient(from 10deg, transparent 0 43deg, rgba(97,34,23,.56) 43.5deg 45deg),
+        radial-gradient(circle, #f5c64c 0 58%, #d8842d 59% 68%, #88331d 69%);
+      box-shadow: inset 0 0 0 11px #e19b3a, inset 0 0 0 22px rgba(105,36,22,.34);
+    }
+
+    .pizza-showcase::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      border-radius: 50%;
+      border: 1px solid rgba(255,255,255,.16);
+      background: radial-gradient(circle at 28% 20%, rgba(255,255,255,.18), transparent 29%);
+    }
+
+    .container {
+      max-width: 1120px;
+      margin: 0 auto;
+      padding: 24px 18px 18px;
+    }
+
+    .promo-band {
+      display: grid;
+      gap: 8px;
+      margin-bottom: 24px;
+      border: 1px solid rgba(244,177,63,.52);
+      border-radius: 8px;
+      background: linear-gradient(135deg, #4a2717, #17110d);
+      box-shadow: var(--shadow);
+      padding: 20px;
+      text-align: center;
+    }
+
+    .promo-band strong {
+      color: var(--gold);
+      font-size: clamp(2.2rem, 8vw, 3.8rem);
+      line-height: .94;
+      text-transform: uppercase;
+    }
+
+    .promo-band span {
+      color: var(--cream);
+      font-size: 1.05rem;
+      font-weight: 900;
+      text-transform: uppercase;
+    }
+
+    .promo-band small { color: var(--muted); }
+
+    .section-title {
+      display: flex;
+      justify-content: space-between;
+      gap: 18px;
+      align-items: end;
+      margin: 30px 0 14px;
+    }
+
+    .section-title h2 {
+      margin: 0;
+      color: var(--gold);
+      font-size: clamp(1.35rem, 3vw, 2rem);
+      text-transform: uppercase;
+    }
+
+    .section-title p {
+      max-width: 490px;
+      margin: 0;
+      color: var(--muted);
+      font-size: .94rem;
+      line-height: 1.45;
+      text-align: right;
+    }
+
+    .menu-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 14px;
+    }
+
+    .menu-grid.two { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    .menu-grid.four { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+
+    .product, .modal-content {
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: linear-gradient(180deg, var(--panel), #17110e);
+      box-shadow: var(--shadow);
+    }
+
+    .product {
+      min-height: 202px;
+      padding: 17px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .product::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 4px;
+      background: linear-gradient(90deg, var(--red), var(--gold));
+    }
+
+    .product.gold::before { background: linear-gradient(90deg, var(--gold), #fff0a5); }
+    .product.red::before { background: linear-gradient(90deg, var(--red), #ff8068); }
+
+    .product h3 {
+      margin: 10px 86px 0 0;
+      color: #fff;
+      font-size: 1.18rem;
+    }
+
+    .product p {
+      margin: 0;
+      color: var(--muted);
+      line-height: 1.44;
+      font-size: .93rem;
+    }
+
+    .price {
+      position: absolute;
+      top: 16px;
+      right: 16px;
+      background: var(--red);
+      color: #fff;
+      border-radius: 999px;
+      padding: 7px 12px;
+      font-weight: 900;
+      box-shadow: 0 12px 30px rgba(214,59,38,.3);
+    }
+
+    .product.gold .price { background: var(--gold); color: #1d1008; }
+
+    .meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 7px;
+      margin-top: auto;
+    }
+
+    .tag {
+      display: inline-flex;
+      align-items: center;
+      min-height: 28px;
+      padding: 5px 9px;
+      border-radius: 999px;
+      background: rgba(244,177,63,.12);
+      color: var(--gold);
+      font-size: .76rem;
+      font-weight: 800;
+    }
+
+    .tag.red {
+      background: rgba(214,59,38,.14);
+      color: #ffb4a7;
+    }
+
+    .btn {
+      min-height: 46px;
+      padding: 12px 18px;
+      border-radius: 8px;
+      background: var(--red);
+      color: white;
+      cursor: pointer;
+      font-weight: 900;
+      transition: transform .18s, filter .18s;
+      text-align: center;
+    }
+
+    .btn:hover { transform: translateY(-1px); filter: brightness(1.05); }
+    .btn.gold { background: var(--gold); color: #180d08; }
+    .btn.secondary { background: rgba(255,255,255,.1); color: var(--text); border: 1px solid rgba(255,255,255,.16); }
+    .btn.whatsapp { background: var(--green); color: #071007; }
+    .btn.blue { background: var(--blue); }
+    .btn.full { width: 100%; margin-top: 2px; }
+
+    .notice {
+      border: 1px solid rgba(244,177,63,.34);
+      border-radius: 8px;
+      background: rgba(244,177,63,.08);
+      color: var(--muted);
+      padding: 14px;
+      line-height: 1.45;
+      font-size: .9rem;
+    }
+
+    .modal {
+      display: none;
+      position: fixed;
+      inset: 0;
+      z-index: 2000;
+      background: rgba(9,7,6,.94);
+      overflow-y: auto;
+      padding: 18px;
+    }
+
+    .modal-content {
+      max-width: 620px;
+      margin: 18px auto;
+      padding: 22px;
+    }
+
+    .modal-head {
+      display: flex;
+      justify-content: space-between;
+      gap: 14px;
+      align-items: flex-start;
+      margin-bottom: 12px;
+    }
+
+    .modal-head h2 {
+      margin: 0;
+      color: var(--gold);
+      font-size: 1.35rem;
+    }
+
+    .close-btn {
+      width: 42px;
+      height: 42px;
+      border-radius: 50%;
+      background: rgba(255,255,255,.1);
+      color: var(--text);
+      cursor: pointer;
+      font-weight: 900;
+      flex: 0 0 auto;
+    }
+
+    .visual-box {
+      display: grid;
+      gap: 8px;
+      margin: 14px 0;
+    }
+
+    .box-cell {
+      min-height: 82px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border: 1px dashed rgba(255,255,255,.3);
+      border-radius: 8px;
+      background: rgba(255,255,255,.04);
+      color: var(--gold);
+      padding: 10px;
+      text-align: center;
+      font-size: .8rem;
+      font-weight: 900;
+      word-break: break-word;
+      cursor: pointer;
+    }
+
+    .box-cell.selected {
+      border-style: solid;
+      border-color: var(--gold);
+      background: rgba(244,177,63,.12);
+      color: white;
+    }
+
+    .extras-row {
+      display: grid;
+      gap: 8px;
+      margin: 8px 0 12px;
+    }
+
+    .extras-col {
+      border: 1px solid rgba(255,255,255,.1);
+      border-radius: 8px;
+      padding: 9px;
+      background: rgba(255,255,255,.04);
+      min-width: 0;
+    }
+
+    .chk-row {
+      display: flex;
+      align-items: center;
+      gap: 7px;
+      min-height: 28px;
+      color: var(--muted);
+      font-size: .78rem;
+    }
+
+    .chk-row input[type="checkbox"] {
+      width: 16px;
+      height: 16px;
+      min-height: auto;
+      margin: 0;
+      accent-color: var(--gold);
+      flex: 0 0 auto;
+    }
+
+    .chk-price {
+      margin-left: auto;
+      color: var(--gold);
+      font-size: .74rem;
+      font-weight: 900;
+      white-space: nowrap;
+    }
+
+    .picking-label {
+      display: none;
+      margin: 8px 0;
+      padding: 8px 12px;
+      border-radius: 8px;
+      background: rgba(244,177,63,.1);
+      color: var(--gold);
+      text-align: center;
+      font-size: .82rem;
+      font-weight: 800;
+    }
+
+    .option-row {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 12px;
+      align-items: center;
+      padding: 12px;
+      border-bottom: 1px solid rgba(255,255,255,.08);
+    }
+
+    .option-row small {
+      display: block;
+      margin-top: 3px;
+      color: var(--muted);
+      line-height: 1.35;
+    }
+
+    .flavor-list {
+      max-height: 340px;
+      overflow: auto;
+      border: 1px solid rgba(255,255,255,.08);
+      border-radius: 8px;
+      background: #100c0a;
+    }
+
+    .flavor-btn {
+      width: 42px;
+      height: 42px;
+      border-radius: 8px;
+      background: var(--gold);
+      color: #160b08;
+      cursor: pointer;
+      font-size: 1.3rem;
+      font-weight: 950;
+    }
+
+    input, select, textarea {
+      width: 100%;
+      min-height: 46px;
+      padding: 12px;
+      margin: 6px 0;
+      border: 1px solid rgba(255,255,255,.14);
+      border-radius: 8px;
+      background: #14100e;
+      color: var(--text);
+    }
+
+    textarea { min-height: 80px; resize: vertical; }
+
+    .form-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 8px;
+    }
+
+    .payment-methods {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 8px;
+      margin: 12px 0;
+    }
+
+    .pay-option {
+      padding: 12px 8px;
+      border: 1px solid rgba(255,255,255,.14);
+      border-radius: 8px;
+      background: rgba(255,255,255,.04);
+      color: var(--muted);
+      text-align: center;
+      cursor: pointer;
+      font-weight: 800;
+    }
+
+    .pay-option.active {
+      border-color: var(--gold);
+      color: var(--text);
+      background: rgba(244,177,63,.13);
+    }
+
+    .cart-item {
+      margin: 9px 0;
+      padding: 12px;
+      border-radius: 8px;
+      background: rgba(255,255,255,.05);
+      border-left: 4px solid var(--gold);
+      color: var(--muted);
+      line-height: 1.38;
+    }
+
+    .cart-item strong { color: white; }
+    .cart-remove {
+      float: right;
+      background: transparent;
+      color: #ff8c7a;
+      cursor: pointer;
+      font-weight: 900;
+    }
+
+    .cart-bar {
+      position: fixed;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      z-index: 1000;
+      min-height: 76px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 22px;
+      padding: 14px 18px;
+      background: var(--green);
+      color: #071007;
+      cursor: pointer;
+      font-weight: 950;
+      box-shadow: 0 -14px 40px rgba(0,0,0,.32);
+    }
+
+    .fine-print {
+      color: #ad9582;
+      font-size: .78rem;
+      line-height: 1.38;
+      text-align: center;
+    }
+
+    @media (max-width: 860px) {
+      .hero-inner { grid-template-columns: 1fr; min-height: auto; }
+      .pizza-showcase { width: min(300px, 72vw); }
+      .hero-info, .menu-grid, .menu-grid.two, .menu-grid.four { grid-template-columns: 1fr; }
+      .section-title { display: block; }
+      .section-title p { text-align: left; margin-top: 6px; }
+    }
+
+    @media (max-width: 560px) {
+      body { padding-bottom: 86px; }
+      .hero-inner { padding-top: 24px; }
+      .hero-actions, .payment-methods, .form-grid { grid-template-columns: 1fr; display: grid; }
+      .modal { padding: 10px; }
+      .modal-content { padding: 17px; }
+      .visual-box { grid-template-columns: 1fr !important; }
+      .cart-bar { justify-content: space-between; gap: 8px; font-size: .93rem; }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <img src="richard.png" alt="Logo" style="height: 465px; width: auto;">
+  </header>
+
+  <main class="container">
+    <section class="promo-band">
+      <strong>Servicio a Domicilio Gratis</strong>
+      <span>De 12:00 pm A 10:30 pm</span>
+      <span>col. Gertrudis sanchez 2da seccion</span>      
+      <span>Calle Norte 86 # 5825 Esquina con oriente 115</span>
+
+    </section>
+
+    <section id="pizzas-especiales">
+      <div class="section-title">
+        <h2>Pizzas especiales</h2>
+        <p>Formatos grandes para compartir, con varios sabores y refresco incluido.</p>
+      </div>
+      <div class="menu-grid">
+        <article class="product gold">
+          <span class="price">$380</span>
+          <h3>Pizza Mega</h3>
+          <p>38x52 cm, 24 rebanadas, 4 especialidades a elegir y Coca Cola 1.75 L gratis.</p>
+          <div class="meta"><span class="tag">4 sabores</span><span class="tag">Coca 1.75 L</span></div>
+          <button class="btn gold full" onclick="openPickerRect('Pizza Mega', 4, 380, ['38x52 cm', '24 rebanadas', 'Coca Cola 1.75 L gratis'])">Elegir sabores</button>
+        </article>
+        <article class="product gold">
+          <span class="price">$340</span>
+          <h3>Pizza Cuadrada</h3>
+          <p>40x40 cm, 16 rebanadas, 4 especialidades a elegir y refresco de sabor 2 L gratis.</p>
+          <div class="meta"><span class="tag">4 sabores</span><span class="tag">Refresco 2 L</span></div>
+          <button class="btn gold full" onclick="openPickerRect('Pizza Cuadrada', 4, 340, ['40x40 cm', '16 rebanadas', 'Refresco de sabor 2 L gratis'])">Elegir sabores</button>
+        </article>
+        <article class="product gold">
+          <span class="price">$250</span>
+          <h3>Pizza Barra</h3>
+          <p>18x52 cm, 12 rebanadas, 2 especialidades a elegir y refresco de sabor 2 L gratis.</p>
+          <div class="meta"><span class="tag">2 sabores</span><span class="tag">Refresco 2 L</span></div>
+          <button class="btn gold full" onclick="openPickerRect('Pizza Barra', 2, 250, ['18x52 cm', '12 rebanadas', 'Refresco de sabor 2 L gratis'])">Elegir sabores</button>
+        </article>
+      </div>
+    </section>
+
+    <section id="dos-por-uno">
+      <div class="section-title">
+        <h2>Especialidades Richard al 2x1</h2>
+        <p>Elige dos pizzas del mismo tamano. Tambien puedes llevar una sola pizza con 40% de descuento.</p>
+      </div>
+      <div class="menu-grid four">
+        <article class="product">
+          <span class="price">$200</span>
+          <h3>Chica 2x1</h3>
+          <p>Dos pizzas chicas de especialidad a elegir.</p>
+          <div class="meta"><span class="tag">2 sabores</span><span class="tag">2x1</span></div>
+          <button class="btn full" onclick="openTwoForOne('Chica', 200, 'chica')">Elegir sabores</button>
+        </article>
+        <article class="product">
+          <span class="price">$265</span>
+          <h3>Mediana 2x1</h3>
+          <p>Dos pizzas medianas de especialidad a elegir.</p>
+          <div class="meta"><span class="tag">2 sabores</span><span class="tag">2x1</span></div>
+          <button class="btn full" onclick="openTwoForOne('Mediana', 265, 'mediana')">Elegir sabores</button>
+        </article>
+        <article class="product">
+          <span class="price">$320</span>
+          <h3>Grande 2x1</h3>
+          <p>Dos pizzas grandes de especialidad a elegir.</p>
+          <div class="meta"><span class="tag">2 sabores</span><span class="tag">2x1</span></div>
+          <button class="btn full" onclick="openTwoForOne('Grande', 320, 'grande')">Elegir sabores</button>
+        </article>
+        <article class="product">
+          <span class="price">$380</span>
+          <h3>Familiar 2x1</h3>
+          <p>Dos pizzas familiares de especialidad a elegir.</p>
+          <div class="meta"><span class="tag">2 sabores</span><span class="tag">2x1</span></div>
+          <button class="btn full" onclick="openTwoForOne('Familiar', 380, 'familiar')">Elegir sabores</button>
+        </article>
+      </div>
+      <div class="notice" style="margin-top:14px;">Si lo prefieres, llevate 1 sola pizza con 40% de descuento. El repartidor no lleva mas de $50 en cambio.</div>
+    </section>
+
+    <section id="promociones">
+      <div class="section-title">
+        <h2>Promociones</h2>
+        <p>Combos familiares con refresco incluido.</p>
+      </div>
+      <div class="menu-grid">
+        <article class="product red">
+          <span class="price">$315</span>
+          <h3>Promo 1</h3>
+          <p>2 pizzas grandes: 1 Hawaiana + 1 Peperoni, con refresco de sabor 2 L gratis.</p>
+          <div class="meta"><span class="tag red">Grandes</span><span class="tag">Refresco 2 L</span></div>
+          <button class="btn full" onclick="addToCartDirect('Promo 1', 315, ['Grande Hawaiana', 'Grande Peperoni', 'Refresco de sabor 2 L gratis'])">Agregar</button>
+        </article>
+        <article class="product red">
+          <span class="price">$440</span>
+          <h3>Promo 2</h3>
+          <p>3 pizzas grandes de cualquier especialidad, excepto mariscos, con refresco 2 L gratis.</p>
+          <div class="meta"><span class="tag red">3 grandes</span><span class="tag">Refresco 2 L</span></div>
+          <button class="btn full" onclick="openPicker('Promo 2 - 3 pizzas grandes', 3, 'ALL', 440, true, 'grande', false)">Elegir sabores</button>
+        </article>
+        <article class="product red">
+          <span class="price">$560</span>
+          <h3>Promo 3</h3>
+          <p>3 pizzas familiares de cualquier especialidad, excepto mariscos, con refresco 2 L gratis.</p>
+          <div class="meta"><span class="tag red">3 familiares</span><span class="tag">Refresco 2 L</span></div>
+          <button class="btn full" onclick="openPicker('Promo 3 - 3 pizzas familiares', 3, 'ALL', 560, true, 'familiar', false)">Elegir sabores</button>
+        </article>
+        <article class="product red">
+          <span class="price">$230</span>
+          <h3>Promo 4</h3>
+          <p>1 pizza Hawaiana grande, papas a la francesa y refresco de sabor 2 L gratis.</p>
+          <div class="meta"><span class="tag red">Grande</span><span class="tag">Con papas</span></div>
+          <button class="btn full" onclick="addToCartDirect('Promo 4', 230, ['Pizza Hawaiana Grande', 'Papas a la Francesa', 'Refresco de sabor 2 L gratis'])">Agregar</button>
+        </article>
+      </div>
+    </section>
+
+    <section id="combos">
+      <div class="section-title">
+        <h2>Super combos</h2>
+        <p>Hamburguesas, papas y refrescos de lata.</p>
+      </div>
+      <div class="menu-grid">
+        <article class="product">
+          <span class="price">$180</span>
+          <h3>Combo 1</h3>
+          <p>2 hamburguesas sencillas, 2 ordenes de papas y 2 refrescos de lata.</p>
+          <button class="btn full" onclick="addToCartDirect('Combo 1', 180, ['2 hamburguesas sencillas', '2 ordenes de papas', '2 refrescos de lata'])">Agregar</button>
+        </article>
+        <article class="product">
+          <span class="price">$195</span>
+          <h3>Combo 2</h3>
+          <p>2 hamburguesas hawaianas, 2 ordenes de papas y 2 refrescos de lata.</p>
+          <button class="btn full" onclick="addToCartDirect('Combo 2', 195, ['2 hamburguesas hawaianas', '2 ordenes de papas', '2 refrescos de lata'])">Agregar</button>
+        </article>
+        <article class="product">
+          <span class="price">$250</span>
+          <h3>Combo 3</h3>
+          <p>3 hamburguesas dobles, 3 ordenes de papas y 3 refrescos de lata.</p>
+          <button class="btn full" onclick="addToCartDirect('Combo 3', 250, ['3 hamburguesas dobles', '3 ordenes de papas', '3 refrescos de lata'])">Agregar</button>
+        </article>
+      </div>
+    </section>
+
+    <section id="extras">
+      <div class="section-title">
+        <h2>Espaguettis y bebidas</h2>
+        <p>Ordenes para 2 personas y bebidas para completar el pedido.</p>
+      </div>
+      <div class="menu-grid">
+        <article class="product">
+          <span class="price">$115</span>
+          <h3>Espaguetti Blanco</h3>
+          <p>Crema, jamon, queso, tocino y mantequilla. Orden para 2 personas.</p>
+          <button class="btn full" onclick="addToCartDirect('Espaguetti Blanco', 115, ['Orden para 2 personas'])">Agregar</button>
+        </article>
+        <article class="product">
+          <span class="price">$125</span>
+          <h3>Espaguetti Gratinado</h3>
+          <p>Crema, champinones, salami, queso, tocino y mantequilla. Orden para 2 personas.</p>
+          <button class="btn full" onclick="addToCartDirect('Espaguetti Gratinado', 125, ['Orden para 2 personas'])">Agregar</button>
+        </article>
+        <article class="product">
+          <span class="price">$50</span>
+          <h3>Coca Cola 1.75 L</h3>
+          <p>Bebida familiar.</p>
+          <button class="btn full" onclick="addToCartDirect('Coca Cola 1.75 L', 50)">Agregar</button>
+        </article>
+        <article class="product">
+          <span class="price">$40</span>
+          <h3>Refresco de sabor 2 L</h3>
+          <p>Bebida familiar de sabor disponible.</p>
+          <button class="btn full" onclick="addToCartDirect('Refresco de sabor 2 L', 40)">Agregar</button>
+        </article>
+      </div>
+    </section>
+
+  </main>
+
+  <div id="pickerModal" class="modal" role="dialog" aria-modal="true" aria-labelledby="pickerTitle">
+    <div class="modal-content">
+      <div class="modal-head">
+        <div>
+          <h2 id="pickerTitle"></h2>
+          <p id="pickerSubtitle" style="margin:6px 0 0; color:var(--muted);">Elige los sabores de tus pizzas.</p>
+        </div>
+        <button class="close-btn" type="button" onclick="closeModal()" aria-label="Cerrar">X</button>
+      </div>
+      <label id="singleArea" style="display:none; margin:8px 0 12px; color:var(--muted);">
+        <input id="singlePizza" type="checkbox" onchange="toggleSinglePizza()" style="width:auto; min-height:auto; margin-right:8px;">
+        Quiero solo 1 pizza con 40% de descuento
+      </label>
+      <div id="visualPreview" class="visual-box"></div>
+      <div id="extrasRow" class="extras-row"></div>
+      <div id="pickingLabel" class="picking-label"></div>
+      <div id="refrescoArea" style="display:none; background:#14100e; padding:12px; border-radius:8px; border:1px solid rgba(255,255,255,.1); margin:10px 0;">
+        <p style="margin:0 0 6px;"><strong>Refresco 2 L:</strong></p>
+        <select id="refrescoSelect" onchange="updateRefresco()">
+          <option value="Sabor">Sabor disponible</option>
+          <option value="Coca">Cambiar a Coca Cola 1.75 L (+ $15)</option>
+        </select>
+      </div>
+      <div id="flavorList" class="flavor-list"></div>
+      <p id="pickerTotal" style="text-align:right; color:var(--gold); font-size:.95rem; margin:12px 0;"></p>
+      <button class="btn gold full" onclick="confirmPicker()">Agregar al carrito</button>
+      <button class="btn secondary full" onclick="closeModal()">Cancelar</button>
+    </div>
+  </div>
+
+  <div id="cartModal" class="modal" role="dialog" aria-modal="true" aria-labelledby="cartTitle">
+    <div class="modal-content">
+      <div class="modal-head">
+        <h2 id="cartTitle">Confirmar pedido</h2>
+        <button class="close-btn" type="button" onclick="closeCart()" aria-label="Cerrar">X</button>
+      </div>
+      <div id="cartItems"></div>
+      <button class="btn blue full" type="button" onclick="getLocation()">Compartir ubicacion GPS</button>
+      <p id="geoStatus" class="fine-print"></p>
+      <input id="customerName" type="text" placeholder="Nombre completo">
+      <input id="customerPhone" type="tel" placeholder="Telefono">
+      <input id="customerAddress" type="text" placeholder="Calle, numero y entre calles">
+      <input id="customerNeighborhood" type="text" placeholder="Colonia">
+      <div class="form-grid">
+        <input id="customerGate" type="text" placeholder="Color de zaguan">
+        <input id="customerFacade" type="text" placeholder="Color de fachada">
+      </div>
+      <textarea id="customerNotes" placeholder="Notas para la entrega"></textarea>
+      <h3>Forma de pago</h3>
+      <div class="payment-methods">
+        <div class="pay-option active" id="p-efe" onclick="setPay('Efectivo')">Efectivo</div>
+        <div class="pay-option" id="p-tra" onclick="setPay('Transferencia')">Transferencia</div>
+        <div class="pay-option" id="p-tar" onclick="setPay('Tarjeta')">Tarjeta +4%</div>
+      </div>
+      <div id="paymentInfo" class="notice" style="display:none;"></div>
+      <h2 id="finalTotal" style="text-align:right; color:var(--gold); font-size:1.8rem;">Total: $0</h2>
+      <p class="fine-print">Al enviar el pedido se abrira WhatsApp. Si pagas por transferencia o tarjeta, envia tambien tu comprobante.</p>
+      <button class="btn whatsapp full" style="height:60px; font-size:1.05rem;" onclick="sendWhatsApp()">Enviar pedido por WhatsApp</button>
+      <button class="btn secondary full" onclick="closeCart()">Seguir comprando</button>
+    </div>
+  </div>
+
+  <div class="cart-bar" onclick="openCart()">
+    <span>Mi carrito</span>
+    <span id="cartCount">0 articulos</span>
+    <span id="cartTotal">$0</span>
+  </div>
+
+  <script>
+    const specialties = [
+      {n:"MEXICANA ESPECIAL", i:"Champinones, chile cuaresmeno, chorizo, pollo, aguacate"},
+      {n:"SUPREMA", i:"Cebolla, atun, chipotle y aguacate"},
+      {n:"DE LUJO", i:"Champinones, atun, jamon, pimiento verde y cebolla"},
+      {n:"RICHARD ESPECIAL", i:"Atun, jitomate, aguacate, chipotle y mayonesa"},
+      {n:"COMBINADA ESPECIAL", i:"Jamon, salami, cebolla, champinones, pimiento verde y chorizo"},
+      {n:"HAWAIANA TRADICIONAL", i:"Jamon, pina y tocino"},
+      {n:"HAWAIANA INTERNACIONAL", i:"Jamon, pina, durazno y cereza"},
+      {n:"MEXICANA", i:"Pierna, jalapenos, pollo y aguacate"},
+      {n:"RANCHERA", i:"Frijoles, jalapenos, chorizo, tocino y aguacate"},
+      {n:"AL PASTOR ESPECIAL", i:"Carne al pastor, cebolla, pina y chipotle"},
+      {n:"ORIENTAL", i:"Pollo, champinones y elote"},
+      {n:"PASTOR NORMAL", i:"Pina, jamon, tocino y chorizo"},
+      {n:"ESPECIAL", i:"Pierna, pollo y elote"},
+      {n:"MAFIOSA", i:"Champinones, chipotle, salami y tocino"},
+      {n:"VEGETARIANA", i:"Champinones, cebolla, pimiento verde y aceitunas"},
+      {n:"CARNES FRIAS", i:"Pierna, lomo, salchicha, tocino y peperoni"},
+      {n:"CLASICA", i:"Champinones, pimiento verde y peperoni"},
+      {n:"CAMPESTRE", i:"Champinones, pollo, elote y jalapenos"},
+      {n:"POLLO A LA BBQ", i:"Pechuga de pollo en salsa BBQ"},
+      {n:"CUBANA", i:"Pierna, atun, jitomate, jalapenos, tocino y aguacate"},
+      {n:"CHAMPERONI", i:"Champinones y peperoni"}
+    ];
+
+    const ORILLA = {chica: 20, mediana: 25, grande: 30, familiar: 35};
+    let cart = [];
+    let currentPicker = null;
+    let slots = [];
+    let activePizza = 0;
+    let activeHalf = 1;
+    let selectedPay = "Efectivo";
+    let userLocation = "No enviada";
+
+    function money(value) {
+      return "$" + Math.round(value);
+    }
+
+    function renderSpecialties() {
+      const grid = document.getElementById("specialtyGrid");
+      grid.innerHTML = specialties.map(function(item) {
+        return '<article class="product"><h3>' + item.n + '</h3><p>' + item.i + '</p><div class="meta"><span class="tag">Especialidad</span></div></article>';
+      }).join("");
+    }
+
+    function makeSlots(limit) {
+      slots = [];
+      for (let i = 0; i < limit; i++) {
+        slots.push({sabor1: "", sabor2: "", mitad: false, orilla: false});
+      }
+      activePizza = 0;
+      activeHalf = 1;
+    }
+
+    function openTwoForOne(size, price, sizeKey) {
+      openPicker(size + " 2x1", 2, "ALL", price, false, sizeKey, true);
+    }
+
+    function openPicker(type, limit, allowed, price, hasRef, sizeKey, allowSingle) {
+      currentPicker = {
+        type: type,
+        mode: "normal",
+        basePrice: price,
+        allowed: allowed || "ALL",
+        hasRef: !!hasRef,
+        refresco: "Sabor",
+        cocaExtra: 0,
+        sizeKey: sizeKey || "",
+        allowSingle: !!allowSingle,
+        single: false,
+        limit: limit
+      };
+      makeSlots(limit);
+      document.getElementById("pickerTitle").innerText = type;
+      document.getElementById("pickerSubtitle").innerText = "Elige los sabores. Puedes usar mitad y mitad, orilla de queso y refresco cuando aplica.";
+      document.getElementById("singleArea").style.display = allowSingle ? "block" : "none";
+      document.getElementById("singlePizza").checked = false;
+      document.getElementById("refrescoArea").style.display = hasRef ? "block" : "none";
+      document.getElementById("refrescoSelect").value = "Sabor";
+      renderPicker();
+      document.getElementById("pickerModal").style.display = "block";
+    }
+
+    function openPickerRect(type, limit, price, details) {
+      currentPicker = {
+        type: type,
+        mode: "rect",
+        basePrice: price,
+        details: details || [],
+        limit: limit,
+        allowed: "ALL",
+        hasRef: false,
+        cocaExtra: 0,
+        refresco: ""
+      };
+      makeSlots(limit);
+      slots.forEach(function(slot) { slot.orilla = false; });
+      document.getElementById("pickerTitle").innerText = type;
+      document.getElementById("pickerSubtitle").innerText = "Elige " + limit + " especialidades. Excepto mariscos. La orilla y el refresco ya van incluidos.";
+      document.getElementById("singleArea").style.display = "none";
+      document.getElementById("refrescoArea").style.display = "none";
+      renderPicker();
+      document.getElementById("pickerModal").style.display = "block";
+    }
+
+    function toggleSinglePizza() {
+      if (!currentPicker || !currentPicker.allowSingle) return;
+      currentPicker.single = document.getElementById("singlePizza").checked;
+      currentPicker.limit = currentPicker.single ? 1 : 2;
+      slots = slots.slice(0, currentPicker.limit);
+      while (slots.length < currentPicker.limit) slots.push({sabor1: "", sabor2: "", mitad: false, orilla: false});
+      activePizza = 0;
+      activeHalf = 1;
+      renderPicker();
+    }
+
+    function renderPicker() {
+      if (!currentPicker) return;
+      renderVisual();
+      renderExtras();
+      renderPickingLabel();
+      renderFlavorList();
+      document.getElementById("pickerTotal").innerText = buildTotalText();
+    }
+
+    function renderVisual() {
+      const preview = document.getElementById("visualPreview");
+      preview.style.gridTemplateColumns = "repeat(" + Math.min(currentPicker.limit, 4) + ", 1fr)";
+      preview.innerHTML = "";
+      slots.forEach(function(slot, index) {
+        const cell = document.createElement("div");
+        cell.className = "box-cell" + (slot.sabor1 ? " selected" : "");
+        if (slot.mitad) {
+          cell.style.flexDirection = "column";
+          cell.style.padding = "4px";
+          cell.innerHTML =
+            '<div style="flex:1;width:100%;display:flex;align-items:center;justify-content:center;border-bottom:1px dashed rgba(255,255,255,.25);font-size:.68rem;padding:3px;" onclick="startPicking(' + index + ',1)">' + (slot.sabor1 ? "1/2 " + slot.sabor1 : "1/2 Sabor 1") + "</div>" +
+            '<div style="flex:1;width:100%;display:flex;align-items:center;justify-content:center;font-size:.68rem;padding:3px;" onclick="startPicking(' + index + ',2)">' + (slot.sabor2 ? "1/2 " + slot.sabor2 : "1/2 Sabor 2") + "</div>";
+        } else {
+          cell.innerText = slot.sabor1 || "Sabor " + (index + 1);
+          cell.onclick = function() { startPicking(index, 1); };
+        }
+        if (activePizza === index) cell.style.outline = "2px solid var(--gold)";
+        preview.appendChild(cell);
+      });
+    }
+
+    function renderExtras() {
+      const row = document.getElementById("extrasRow");
+      const showExtras = currentPicker.mode === "normal";
+      row.style.display = showExtras ? "grid" : "none";
+      row.style.gridTemplateColumns = "repeat(" + Math.min(currentPicker.limit, 4) + ", 1fr)";
+      row.innerHTML = "";
+      if (!showExtras) return;
+      const orillaPrice = ORILLA[currentPicker.sizeKey] || 0;
+      slots.forEach(function(slot, index) {
+        const col = document.createElement("div");
+        col.className = "extras-col";
+        col.innerHTML =
+          '<div class="chk-row"><input type="checkbox" id="mitad-' + index + '" ' + (slot.mitad ? "checked" : "") + ' onchange="toggleMitad(' + index + ')"><label for="mitad-' + index + '">Mitad y mitad</label><span class="chk-price">+$10</span></div>' +
+          (orillaPrice ? '<div class="chk-row"><input type="checkbox" id="orilla-' + index + '" ' + (slot.orilla ? "checked" : "") + ' onchange="toggleOrilla(' + index + ')"><label for="orilla-' + index + '">Orilla de queso</label><span class="chk-price">+$' + orillaPrice + '</span></div>' : "");
+        row.appendChild(col);
+      });
+    }
+
+    function startPicking(index, half) {
+      activePizza = index;
+      activeHalf = half || 1;
+      renderPicker();
+    }
+
+    function toggleMitad(index) {
+      slots[index].mitad = document.getElementById("mitad-" + index).checked;
+      if (!slots[index].mitad) slots[index].sabor2 = "";
+      if (activePizza === index) activeHalf = 1;
+      renderPicker();
+    }
+
+    function toggleOrilla(index) {
+      slots[index].orilla = document.getElementById("orilla-" + index).checked;
+      renderPicker();
+    }
+
+    function updateRefresco() {
+      if (!currentPicker) return;
+      const value = document.getElementById("refrescoSelect").value;
+      currentPicker.refresco = value;
+      currentPicker.cocaExtra = value === "Coca" ? 15 : 0;
+      renderPicker();
+    }
+
+    function renderPickingLabel() {
+      const label = document.getElementById("pickingLabel");
+      if (!currentPicker || currentPicker.mode !== "normal") {
+        label.style.display = "none";
+        return;
+      }
+      const pizzaText = currentPicker.limit > 1 ? "Pizza " + (activePizza + 1) : "Pizza";
+      const halfText = slots[activePizza] && slots[activePizza].mitad ? (activeHalf === 1 ? " - 1/2 sabor 1" : " - 1/2 sabor 2") : "";
+      label.innerText = "Eligiendo: " + pizzaText + halfText + ". Toca un sabor de la lista.";
+      label.style.display = "block";
+    }
+
+    function renderFlavorList() {
+      const list = document.getElementById("flavorList");
+      const pool = currentPicker.allowed === "ALL" ? specialties : specialties.filter(function(item) {
+        return currentPicker.allowed.indexOf(item.n) >= 0;
+      });
+      list.innerHTML = pool.map(function(item) {
+        return '<div class="option-row"><div><strong>' + item.n + '</strong><small>' + item.i + '</small></div><button class="flavor-btn" onclick="selectFlavor(&quot;' + item.n + '&quot;)">+</button></div>';
+      }).join("");
+    }
+
+    function selectFlavor(name) {
+      if (!currentPicker) return;
+      if (activePizza < 0) activePizza = 0;
+      if (activeHalf === 2 && slots[activePizza].mitad) slots[activePizza].sabor2 = name;
+      else slots[activePizza].sabor1 = name;
+
+      for (let i = 0; i < slots.length; i++) {
+        if (!slots[i].sabor1) {
+          activePizza = i;
+          activeHalf = 1;
+          renderPicker();
+          return;
+        }
+        if (slots[i].mitad && !slots[i].sabor2) {
+          activePizza = i;
+          activeHalf = 2;
+          renderPicker();
+          return;
+        }
+      }
+      activePizza = 0;
+      activeHalf = 1;
+      renderPicker();
+    }
+
+    function clearFlavor(index) {
+      if (!currentPicker || !slots[index]) return;
+      slots[index].sabor1 = "";
+      slots[index].sabor2 = "";
+      activePizza = index;
+      activeHalf = 1;
+      renderPicker();
+    }
+
+    function calculatePickerTotal() {
+      if (!currentPicker) return 0;
+      let total = currentPicker.allowSingle && currentPicker.single ? currentPicker.basePrice * 0.6 : currentPicker.basePrice;
+      total += currentPicker.cocaExtra || 0;
+      if (currentPicker.mode === "normal") {
+        const orillaPrice = ORILLA[currentPicker.sizeKey] || 0;
+        slots.forEach(function(slot) {
+          if (slot.mitad) total += 10;
+          if (slot.orilla) total += orillaPrice;
+        });
+      }
+      return total;
+    }
+
+    function buildTotalText() {
+      const parts = [];
+      if (currentPicker.allowSingle && currentPicker.single) parts.push("1 sola pizza con 40% de descuento");
+      if (currentPicker.cocaExtra) parts.push("Cambio a Coca +$15");
+      if (currentPicker.mode === "normal") {
+        const orillaPrice = ORILLA[currentPicker.sizeKey] || 0;
+        slots.forEach(function(slot, index) {
+          const label = currentPicker.limit > 1 ? "P" + (index + 1) + ": " : "";
+          if (slot.mitad) parts.push(label + "Mitad +$10");
+          if (slot.orilla) parts.push(label + "Orilla +$" + orillaPrice);
+        });
+      }
+      return (parts.length ? parts.join(" | ") + " -> " : "") + "Total: " + money(calculatePickerTotal());
+    }
+
+    function confirmPicker() {
+      if (!currentPicker) return;
+      for (let i = 0; i < currentPicker.limit; i++) {
+        if (!slots[i].sabor1) {
+          alert("Elige el sabor de la Pizza " + (i + 1));
+          return;
+        }
+        if (slots[i].mitad && !slots[i].sabor2) {
+          alert("Elige el segundo sabor de la Pizza " + (i + 1));
+          return;
+        }
+      }
+      const details = [];
+      if (currentPicker.details) currentPicker.details.forEach(function(detail) { details.push(detail); });
+      if (currentPicker.allowSingle && currentPicker.single) details.push("1 sola pizza con 40% de descuento");
+      if (currentPicker.hasRef) details.push("Refresco: " + currentPicker.refresco);
+      const orillaPrice = ORILLA[currentPicker.sizeKey] || 0;
+      slots.forEach(function(slot, index) {
+        let desc = currentPicker.limit > 1 ? "Pizza " + (index + 1) + ": " : "Pizza: ";
+        desc += slot.mitad ? slot.sabor1 + " / " + slot.sabor2 + " (mitad y mitad)" : slot.sabor1;
+        if (slot.mitad) desc += " + mitad $10";
+        if (slot.orilla) desc += " + orilla de queso $" + orillaPrice;
+        details.push(desc);
+      });
+      cart.push({type: currentPicker.type, flavors: details, price: calculatePickerTotal()});
+      closeModal();
+      updateStats();
+    }
+
+    function closeModal() {
+      document.getElementById("pickerModal").style.display = "none";
+    }
+
+    function addToCartDirect(name, price, details) {
+      cart.push({type: name, flavors: details || [], price: price});
+      updateStats();
+      alert(name + " agregado al carrito");
+    }
+
+    function updateStats() {
+      const total = cart.reduce(function(sum, item) { return sum + item.price; }, 0);
+      document.getElementById("cartCount").innerText = cart.length + (cart.length === 1 ? " articulo" : " articulos");
+      document.getElementById("cartTotal").innerText = money(total);
+      calculateFinalTotal();
+    }
+
+    function openCart() {
+      document.getElementById("cartModal").style.display = "block";
+      const items = document.getElementById("cartItems");
+      if (!cart.length) {
+        items.innerHTML = '<div class="notice">Tu carrito esta vacio. Agrega una pizza o promocion para continuar.</div>';
+      } else {
+        items.innerHTML = cart.map(function(item, index) {
+          const detailHtml = item.flavors.map(function(detail) { return "<div>- " + detail + "</div>"; }).join("");
+          return '<div class="cart-item"><button class="cart-remove" onclick="removeItem(' + index + ')">X</button><strong>' + item.type + '</strong> <span style="color:var(--gold);">' + money(item.price) + '</span><div style="margin-top:6px;">' + detailHtml + "</div></div>";
+        }).join("");
+      }
+      calculateFinalTotal();
+    }
+
+    function closeCart() {
+      document.getElementById("cartModal").style.display = "none";
+    }
+
+    function removeItem(index) {
+      cart.splice(index, 1);
+      updateStats();
+      openCart();
+    }
+
+    function setPay(method) {
+      selectedPay = method;
+      document.querySelectorAll(".pay-option").forEach(function(el) { el.classList.remove("active"); });
+      document.getElementById("p-" + method.substring(0, 3).toLowerCase()).classList.add("active");
+      const info = document.getElementById("paymentInfo");
+      if (method === "Efectivo") {
+        info.style.display = "none";
+      } else if (method === "Transferencia") {
+        info.style.display = "block";
+        info.innerHTML = "<strong>Transferencia:</strong> envia tu comprobante por WhatsApp despues de mandar el pedido.";
+      } else {
+        info.style.display = "block";
+        info.innerHTML = "<strong>Tarjeta:</strong> se agrega 4% al total.";
+      }
+      calculateFinalTotal();
+    }
+
+    function calculateFinalTotal() {
+      let total = cart.reduce(function(sum, item) { return sum + item.price; }, 0);
+      if (selectedPay === "Tarjeta") total *= 1.04;
+      document.getElementById("finalTotal").innerText = "Total: " + money(total);
+    }
+
+    function getLocation() {
+      if (!navigator.geolocation) {
+        document.getElementById("geoStatus").innerText = "Tu navegador no permite enviar ubicacion.";
+        return;
+      }
+      navigator.geolocation.getCurrentPosition(
+        function(position) {
+          userLocation = "https://www.google.com/maps?q=" + position.coords.latitude + "," + position.coords.longitude;
+          document.getElementById("geoStatus").innerText = "Ubicacion capturada correctamente.";
+        },
+        function() {
+          document.getElementById("geoStatus").innerText = "No se pudo capturar la ubicacion.";
+        }
+      );
+    }
+
+    function sendWhatsApp() {
+      if (!cart.length) {
+        alert("Agrega productos al carrito.");
+        return;
+      }
+      const name = document.getElementById("customerName").value.trim();
+      const phone = document.getElementById("customerPhone").value.trim();
+      const address = document.getElementById("customerAddress").value.trim();
+      if (!name || !phone || !address) {
+        alert("Faltan nombre, telefono o direccion.");
+        return;
+      }
+      let total = cart.reduce(function(sum, item) { return sum + item.price; }, 0);
+      if (selectedPay === "Tarjeta") total = Math.round(total * 1.04);
+      let msg = "*RICHARD PIZZA - PEDIDO*\\n";
+      msg += "Cliente: " + name + "\\n";
+      msg += "Telefono: " + phone + "\\n";
+      msg += "Direccion: " + address + "\\n";
+      msg += "Colonia: " + document.getElementById("customerNeighborhood").value + "\\n";
+      msg += "Zaguan: " + document.getElementById("customerGate").value + " | Fachada: " + document.getElementById("customerFacade").value + "\\n";
+      msg += "GPS: " + userLocation + "\\n";
+      msg += "Notas: " + document.getElementById("customerNotes").value + "\\n";
+      msg += "----------------\\n";
+      cart.forEach(function(item) {
+        msg += "- " + item.type + " " + money(item.price) + "\\n";
+        item.flavors.forEach(function(detail) { msg += "  * " + detail + "\\n"; });
+      });
+      msg += "----------------\\n";
+      msg += "Pago: " + selectedPay + "\\n";
+      msg += "TOTAL: " + money(total);
+      if (selectedPay === "Transferencia" || selectedPay === "Tarjeta") msg += "\\nEnviar comprobante por este chat.";
+      window.open("https://wa.me/525591213993?text=" + encodeURIComponent(msg), "_blank");
+    }
+
+    updateStats();
+  </script>
+</body>
+</html>
