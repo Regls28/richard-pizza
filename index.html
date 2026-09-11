@@ -38,6 +38,23 @@
     button { border: 0; }
     a { color: inherit; }
 
+    header {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 20px;
+      text-align: center;
+      background: #000;
+      border-bottom: 4px solid var(--red);
+    }
+
+    header img {
+      display: block;
+      max-width: 100%;
+      height: auto;
+      max-height: 260px;
+    }
+
     .hero {
       overflow: hidden;
       border-bottom: 1px solid var(--line);
@@ -614,7 +631,7 @@
 </head>
 <body>
   <header>
-    <img src="richard.png" alt="Logo" style="height: 400px; width: auto;">
+    <img src="richard.png" alt="Logo">
   </header>
 
   <main class="container">
