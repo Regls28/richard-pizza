@@ -411,6 +411,157 @@
       margin: 14px 0;
     }
 
+    /* Vista tipo pizza redonda: una circunferencia por cada pizza (2x1 y promos de varias pizzas) */
+    .visual-box.shape-circle {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      align-items: flex-start;
+      gap: 16px;
+      margin: 6px auto 18px;
+    }
+
+    .pizza-circle-wrap {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .pizza-circle-wrap .pizza-caption {
+      font-size: .7rem;
+      color: var(--muted);
+      font-weight: 800;
+    }
+
+    .pizza-circle {
+      position: relative;
+      border-radius: 50%;
+      overflow: hidden;
+      border: 6px solid #e19b3a;
+      box-shadow:
+        inset 0 0 0 3px rgba(0,0,0,.28),
+        0 14px 28px rgba(0,0,0,.42);
+      background: radial-gradient(circle, #f5c64c 0 58%, #d8842d 59% 68%, #88331d 69%);
+      flex: 0 0 auto;
+    }
+
+    .circle-fill {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 12%;
+      cursor: pointer;
+      color: #fff7ee;
+      font-size: .72rem;
+      font-weight: 900;
+      line-height: 1.15;
+      text-shadow: 0 1px 3px rgba(0,0,0,.65);
+      background: rgba(20,14,10,.4);
+      transition: background .15s, box-shadow .15s;
+      overflow: hidden;
+      word-break: break-word;
+    }
+
+    .circle-fill.top {
+      top: 0;
+      bottom: auto;
+      height: 50%;
+      width: 100%;
+      padding: 10% 10% 6% 10%;
+      border-bottom: 1px dashed rgba(255,255,255,.55);
+    }
+
+    .circle-fill.bottom {
+      top: auto;
+      bottom: 0;
+      height: 50%;
+      width: 100%;
+      padding: 6% 10% 10% 10%;
+    }
+
+    .circle-fill.selected {
+      background: rgba(244,177,63,.88);
+      color: #22120a;
+      text-shadow: none;
+    }
+
+    .circle-fill.active-slot {
+      box-shadow: inset 0 0 0 3px var(--gold);
+      background: rgba(255,255,255,.16);
+    }
+
+    .circle-fill.active-slot.selected {
+      background: rgba(244,177,63,.95);
+    }
+
+    /* Vista rectangular (Pizza Mega / Pizza Barra) y cuadrada (Pizza Cuadrada): misma cuadricula, distinto marco */
+    .visual-box.shape-rect,
+    .visual-box.shape-square {
+      display: grid;
+      gap: 3px;
+      margin: 6px auto 16px;
+      border: 6px solid #e19b3a;
+      border-radius: 10px;
+      overflow: hidden;
+      background: linear-gradient(180deg, #d8842d, #b5661f);
+      box-shadow: 0 16px 34px rgba(0,0,0,.4);
+    }
+
+    .visual-box.shape-rect {
+      width: 100%;
+      aspect-ratio: 1.7 / 1;
+    }
+
+    .visual-box.shape-square {
+      width: min(240px, 66vw);
+      aspect-ratio: 1;
+    }
+
+    .rect-cell {
+      display: flex;
+      flex-direction: column;
+      gap: 3px;
+      min-width: 0;
+      min-height: 0;
+    }
+
+    .rect-cell > div {
+      flex: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 6px;
+      cursor: pointer;
+      color: #fff7ee;
+      font-size: .72rem;
+      font-weight: 900;
+      line-height: 1.15;
+      text-shadow: 0 1px 3px rgba(0,0,0,.65);
+      background: rgba(20,14,10,.4);
+      transition: background .15s;
+      word-break: break-word;
+    }
+
+    .rect-cell > div.selected {
+      background: rgba(244,177,63,.88);
+      color: #22120a;
+      text-shadow: none;
+    }
+
+    .rect-cell > div.active-slot {
+      box-shadow: inset 0 0 0 3px var(--gold);
+      background: rgba(255,255,255,.16);
+    }
+
+    .rect-cell > div.active-slot.selected {
+      background: rgba(244,177,63,.95);
+    }
+
     .box-cell {
       min-height: 82px;
       display: flex;
@@ -624,7 +775,9 @@
       .hero-actions, .payment-methods, .form-grid { grid-template-columns: 1fr; display: grid; }
       .modal { padding: 10px; }
       .modal-content { padding: 17px; }
-      .visual-box { grid-template-columns: 1fr !important; }
+      .visual-box.shape-rect { aspect-ratio: 1.3 / 1; }
+      .visual-box.shape-square { width: min(210px, 72vw); }
+      .visual-box.shape-circle { gap: 10px; }
       .cart-bar { justify-content: space-between; gap: 8px; font-size: .93rem; }
     }
   </style>
@@ -676,7 +829,7 @@
     <section id="dos-por-uno">
       <div class="section-title">
         <h2>Especialidades Richard al 2x1</h2>
-        <p>Elige dos pizzas del mismo tamano. Tambien puedes llevar una sola pizza con 40% de descuento.</p>
+        <p>Elige 2 pizzas del mismo tamaño. Tambien puedes llevar una sola pizza con 40% de descuento.</p>
       </div>
       <div class="menu-grid four">
         <article class="product">
@@ -713,8 +866,9 @@
 
     <section id="promociones">
       <div class="section-title">
-        <h2>Promociones</h2>
-        <p>Combos familiares con refresco incluido.</p>
+        <h2><"text-align:center;"><strong>promociones</strong></h2>
+        <h3></p><strong>promociones familiares con refresco incluido</strong></p></h3>
+
       </div>
       <div class="menu-grid">
         <article class="product red">
@@ -727,14 +881,14 @@
         <article class="product red">
           <span class="price">$440</span>
           <h3>Promo 2</h3>
-          <p>3 pizzas grandes de cualquier especialidad, excepto mariscos, con refresco 2 L gratis.</p>
+          <p>3 pizzas grandes de cualquier especialidad, con refresco 2 L gratis.</p>
           <div class="meta"><span class="tag red">3 grandes</span><span class="tag">Refresco 2 L</span></div>
           <button class="btn full" onclick="openPicker('Promo 2 - 3 pizzas grandes', 3, 'ALL', 440, true, 'grande', false)">Elegir sabores</button>
         </article>
         <article class="product red">
           <span class="price">$560</span>
           <h3>Promo 3</h3>
-          <p>3 pizzas familiares de cualquier especialidad, excepto mariscos, con refresco 2 L gratis.</p>
+          <p>3 pizzas familiares de cualquier especialidad, con refresco 2 L gratis.</p>
           <div class="meta"><span class="tag red">3 familiares</span><span class="tag">Refresco 2 L</span></div>
           <button class="btn full" onclick="openPicker('Promo 3 - 3 pizzas familiares', 3, 'ALL', 560, true, 'familiar', false)">Elegir sabores</button>
         </article>
@@ -851,7 +1005,8 @@
       <p id="geoStatus" class="fine-print"></p>
       <input id="customerName" type="text" placeholder="Nombre completo">
       <input id="customerPhone" type="tel" placeholder="Telefono">
-      <input id="customerAddress" type="text" placeholder="Calle, numero y entre calles">
+      <input id="customerAddress" type="text" placeholder="Calle y numero">
+      <input id="customerBetweenStreets" type="text" placeholder="Entre que calles">
       <input id="customerNeighborhood" type="text" placeholder="Colonia">
       <div class="form-grid">
         <input id="customerGate" type="text" placeholder="Color de zaguan">
@@ -940,6 +1095,7 @@
       currentPicker = {
         type: type,
         mode: "normal",
+        shape: "circle",
         basePrice: price,
         allowed: allowed || "ALL",
         hasRef: !!hasRef,
@@ -965,6 +1121,7 @@
       currentPicker = {
         type: type,
         mode: "rect",
+        shape: type.indexOf("Cuadrada") >= 0 ? "square" : "rect",
         basePrice: price,
         details: details || [],
         limit: limit,
@@ -1005,24 +1162,86 @@
 
     function renderVisual() {
       const preview = document.getElementById("visualPreview");
-      preview.style.gridTemplateColumns = "repeat(" + Math.min(currentPicker.limit, 4) + ", 1fr)";
+      preview.className = "visual-box shape-" + (currentPicker.shape || "circle");
       preview.innerHTML = "";
+
+      if (currentPicker.shape === "circle") {
+        renderCircleVisual(preview);
+      } else {
+        renderGridVisual(preview);
+      }
+    }
+
+    function renderCircleVisual(preview) {
+      const total = slots.length;
+      const size = total <= 1 ? 190 : total === 2 ? 150 : total === 3 ? 118 : 96;
+
+      slots.forEach(function(slot, index) {
+        const wrap = document.createElement("div");
+        wrap.className = "pizza-circle-wrap";
+
+        const circle = document.createElement("div");
+        circle.className = "pizza-circle";
+        circle.style.width = size + "px";
+        circle.style.height = size + "px";
+
+        if (slot.mitad) {
+          circle.appendChild(makeCircleFill(index, 1, "top", slot.sabor1 ? slot.sabor1 : "Sabor 1"));
+          circle.appendChild(makeCircleFill(index, 2, "bottom", slot.sabor2 ? slot.sabor2 : "Sabor 2"));
+        } else {
+          circle.appendChild(makeCircleFill(index, 1, "", slot.sabor1 || "Sabor " + (index + 1)));
+        }
+        wrap.appendChild(circle);
+
+        if (total > 1) {
+          const caption = document.createElement("span");
+          caption.className = "pizza-caption";
+          caption.innerText = "Pizza " + (index + 1);
+          wrap.appendChild(caption);
+        }
+
+        preview.appendChild(wrap);
+      });
+    }
+
+    function makeCircleFill(index, half, side, label) {
+      const div = document.createElement("div");
+      const slot = slots[index];
+      const filled = half === 2 ? !!slot.sabor2 : !!slot.sabor1;
+      div.className = "circle-fill" + (side ? " " + side : "") + (filled ? " selected" : "") + (activePizza === index && (!slot.mitad || activeHalf === half) ? " active-slot" : "");
+      div.innerText = label;
+      div.onclick = function() { startPicking(index, half); };
+      return div;
+    }
+
+    function renderGridVisual(preview) {
+      const total = slots.length;
+      const cols = Math.ceil(Math.sqrt(total));
+      const rows = Math.ceil(total / cols);
+      preview.style.gridTemplateColumns = "repeat(" + cols + ", 1fr)";
+      preview.style.gridTemplateRows = "repeat(" + rows + ", 1fr)";
+
       slots.forEach(function(slot, index) {
         const cell = document.createElement("div");
-        cell.className = "box-cell" + (slot.sabor1 ? " selected" : "");
+        cell.className = "rect-cell";
         if (slot.mitad) {
-          cell.style.flexDirection = "column";
-          cell.style.padding = "4px";
-          cell.innerHTML =
-            '<div style="flex:1;width:100%;display:flex;align-items:center;justify-content:center;border-bottom:1px dashed rgba(255,255,255,.25);font-size:.68rem;padding:3px;" onclick="startPicking(' + index + ',1)">' + (slot.sabor1 ? "1/2 " + slot.sabor1 : "1/2 Sabor 1") + "</div>" +
-            '<div style="flex:1;width:100%;display:flex;align-items:center;justify-content:center;font-size:.68rem;padding:3px;" onclick="startPicking(' + index + ',2)">' + (slot.sabor2 ? "1/2 " + slot.sabor2 : "1/2 Sabor 2") + "</div>";
+          cell.appendChild(makeRectHalf(index, 1, slot.sabor1 ? "1/2 " + slot.sabor1 : "1/2 Sabor 1"));
+          cell.appendChild(makeRectHalf(index, 2, slot.sabor2 ? "1/2 " + slot.sabor2 : "1/2 Sabor 2"));
         } else {
-          cell.innerText = slot.sabor1 || "Sabor " + (index + 1);
-          cell.onclick = function() { startPicking(index, 1); };
+          cell.appendChild(makeRectHalf(index, 1, slot.sabor1 || "Sabor " + (index + 1)));
         }
-        if (activePizza === index) cell.style.outline = "2px solid var(--gold)";
         preview.appendChild(cell);
       });
+    }
+
+    function makeRectHalf(index, half, label) {
+      const div = document.createElement("div");
+      const slot = slots[index];
+      const filled = half === 2 ? !!slot.sabor2 : !!slot.sabor1;
+      div.className = (filled ? "selected" : "") + (activePizza === index && (!slot.mitad || activeHalf === half) ? " active-slot" : "");
+      div.innerText = label;
+      div.onclick = function() { startPicking(index, half); };
+      return div;
     }
 
     function renderExtras() {
@@ -1233,7 +1452,7 @@
         info.style.display = "none";
       } else if (method === "Transferencia") {
         info.style.display = "block";
-        info.innerHTML = "<strong>Transferencia:</strong> envia tu comprobante por WhatsApp despues de mandar el pedido.";
+        info.innerHTML = "<strong>Transferencia: 1271 8001 3573 5983 76</strong> <p>envia tu comprobante por WhatsApp despues de mandar el pedido.</p>";
       } else {
         info.style.display = "block";
         info.innerHTML = "<strong>Tarjeta:</strong> se agrega 4% al total.";
@@ -1271,6 +1490,7 @@
       const name = document.getElementById("customerName").value.trim();
       const phone = document.getElementById("customerPhone").value.trim();
       const address = document.getElementById("customerAddress").value.trim();
+      const betweenStreets = document.getElementById("customerBetweenStreets").value.trim();
       if (!name || !phone || !address) {
         alert("Faltan nombre, telefono o direccion.");
         return;
@@ -1281,6 +1501,7 @@
       msg += "Cliente: " + name + "\\n";
       msg += "Telefono: " + phone + "\\n";
       msg += "Direccion: " + address + "\\n";
+      msg += "Entre calles: " + betweenStreets + "\\n";
       msg += "Colonia: " + document.getElementById("customerNeighborhood").value + "\\n";
       msg += "Zaguan: " + document.getElementById("customerGate").value + " | Fachada: " + document.getElementById("customerFacade").value + "\\n";
       msg += "GPS: " + userLocation + "\\n";
